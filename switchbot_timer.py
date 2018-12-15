@@ -1,37 +1,47 @@
-
 import binascii
-#!/usr/bin/env python
-# import os
-# import sys
+import sys
 import time
 
-from bluepy.btle import Peripheral
 import daemon
 
-# import Deropy.deamonize as dmn
-# from daemon.runner import DaemonRunner
-
-# from timeout_decorator import timeout
-
-MAC_ADRESS = 'F7:B0:EE:23:DC:77'
+from bluepy.btle import Peripheral
+from timeout_decorator import timeout
 
 
-def push():
-    p = Peripheral(MAC_ADRESS, 'random')
-    hand_service = p.getServiceByUUID(
-        'cba20d00-224d-11e6-9fb8-0002a5d5c51b')
+@timeout(5)
+def push(mac_address):
+    p = Peripheral(mac_address, 'random')
+    hand_service = p.getServiceByUUID('cba20d00-224d-11e6-9fb8-0002a5d5c51b')
     hand = hand_service.getCharacteristics(
         'cba20002-224d-11e6-9fb8-0002a5d5c51b')[0]
     hand.write(binascii.a2b_hex('570100'))
     p.disconnect()
 
 
-def set_timer():
+def set_timer(interval, mac_address):
     while True:
-        push()
-        time.sleep(10)
+        push(mac_address)
+        time.sleep(interval * 60)
+
+
+def main():
+    # Macアドレスのテスト
+    if sys.argv[1] in ('-t', '--test'):
+        try:
+            push(sys.argv[2])
+            print('Success !!')
+        except Exception as ex:
+            print('Failed ...')
+
+    # タイマーセット
+    elif str.isdecimal(sys.argv[1]):
+        with daemon.DaemonContext():
+            set_timer(sys.argv[1], sys.argv[2])
+
+    # その他
+    else:
+        print('got unexpected arguments.')
 
 
 if __name__ == '__main__':
-    with daemon.DaemonContext():
-        set_timer()
+    main()
