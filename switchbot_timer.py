@@ -2,10 +2,11 @@
 import binascii
 #!/usr/bin/env python
 # import os
-import sys
+# import sys
 import time
 
 from bluepy.btle import Peripheral
+import daemon
 
 # import Deropy.deamonize as dmn
 # from daemon.runner import DaemonRunner
@@ -32,4 +33,5 @@ def set_timer():
 
 
 if __name__ == '__main__':
-    set_timer()
+    with daemon.DaemonContext():
+        set_timer()
