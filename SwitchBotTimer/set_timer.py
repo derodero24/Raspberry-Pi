@@ -1,5 +1,4 @@
 import binascii
-import sys
 import time
 
 import daemon
@@ -21,7 +20,15 @@ def push(address):
     p.disconnect()
 
 
-def set_timer():
+def main():
+    # 最初はすべてプッシュ
+    for switch in switch_list:
+        try:
+            push(switch['address'])
+        except:
+            pass
+        switch['last_time'] = time.time()
+    # 2回目以降は随時プッシュ
     while True:
         for switch in switch_list:
             if time.time() - switch['last_time'] > switch['interval'] * 60:
@@ -33,7 +40,5 @@ def set_timer():
 
 
 if __name__ == '__main__':
-    for switch in switch_list:
-        switch['last_time'] = time.time()
     with daemon.DaemonContext():
-        set_timer()
+        main()
