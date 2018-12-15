@@ -8,7 +8,7 @@ from bluepy.btle import Peripheral
 from timeout_decorator import timeout
 
 
-@timeout(5)
+@timeout(10)
 def push(mac_address):
     p = Peripheral(mac_address, 'random')
     hand_service = p.getServiceByUUID('cba20d00-224d-11e6-9fb8-0002a5d5c51b')
