@@ -1,6 +1,6 @@
 import sys
 
-from switchbot_timer import push
+from set_timer import push
 
 
 def main():
