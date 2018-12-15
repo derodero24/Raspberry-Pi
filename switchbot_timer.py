@@ -29,7 +29,7 @@ def push():
 def set_timer():
     while True:
         push()
-        time.sleep(60)
+        time.sleep(10)
 
 
 if __name__ == '__main__':
