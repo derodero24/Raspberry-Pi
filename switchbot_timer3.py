@@ -26,12 +26,15 @@ def push():
     p.disconnect()
 
 
-def set_timer(interval):
+# def set_timer(interval):
+def set_timer():
     while True:
         push()
-        time.sleep(interval)
+        # time.sleep(interval)
+        time.sleep(10)
 
 
 if __name__ == '__main__':
     with daemon.DaemonContext():
-        set_timer(sys.argv[1])
+        # set_timer(sys.argv[1])
+        set_timer()
