@@ -1,10 +1,12 @@
- #!/usr/bin/env python
+
 import binascii
+#!/usr/bin/env python
 # import os
 import sys
 import time
 
 from bluepy.btle import Peripheral
+
 # import Deropy.deamonize as dmn
 # from daemon.runner import DaemonRunner
 
@@ -12,8 +14,9 @@ from bluepy.btle import Peripheral
 
 MAC_ADRESS = 'F7:B0:EE:23:DC:77'
 
-def push(mac_address):
-    p = Peripheral(mac_address, 'random')
+
+def push():
+    p = Peripheral(MAC_ADRESS, 'random')
     hand_service = p.getServiceByUUID(
         'cba20d00-224d-11e6-9fb8-0002a5d5c51b')
     hand = hand_service.getCharacteristics(
@@ -22,7 +25,11 @@ def push(mac_address):
     p.disconnect()
 
 
-if __name__ == '__main__':
+def set_timer():
     while True:
-        push(MAC_ADRESS)
+        push()
         time.sleep(60)
+
+
+if __name__ == '__main__':
+    set_timer()
