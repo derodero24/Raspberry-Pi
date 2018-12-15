@@ -7,5 +7,5 @@ sudo hcitool lescan
 # Macアドレスをテスト
 python switchbot_timer.py --test <Macアドレス>
 # タイマーセット
-nohup python switchbot_timer.py <タイマーインターバル[分]> <Macアドレス> > /dev/null
+nohup python switchbot_timer.py <タイマーインターバル[分]> <Macアドレス> > /dev/null &
 ```
