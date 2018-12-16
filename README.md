@@ -1,11 +1,19 @@
 # Raspberry-Pi
 
-## switchbot_timer.py
+## SwitchBotTimer
 ```bash
 # Bluetoothの機種(Macアドレス)一覧を表示
 sudo hcitool lescan
+
 # Macアドレスをテスト
-python switchbot_timer.py --test <Macアドレス>
+python check_address.py <Macアドレス>
+
+# Macアドレスと実行間隔をファイルに追記
+
+# 既存プロセスをkill
+ps aux | grep python
+kill <PID>
+
 # タイマーセット
-nohup python switchbot_timer.py <タイマーインターバル[分]> <Macアドレス> > /dev/null &
+python switchbot_timer.py
 ```
