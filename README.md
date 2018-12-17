@@ -15,5 +15,5 @@ ps aux | grep python
 kill <PID>
 
 # タイマーセット
-python switchbot_timer.py
+python set_timer.py
 ```
